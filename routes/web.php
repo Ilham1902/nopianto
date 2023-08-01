@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('Auth.login');
 })->middleware(['guest'])->name('login');
 
 Route::get('/absensi', function () {
@@ -27,9 +27,9 @@ Route::get('/absensi', function () {
     }
 })->middleware(['auth', 'verified'])->name('absensi');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'role:admin']], function () {
+Route::group([['auth', 'verified', 'role:admin']], function () {
     Route::get('/absensi', [AbsensiController::class, 'index'])->name('admin.absensi');
-    Route::post('/simpanAbsensi', [AbsensiController::class, 'simpanAbsensi'])->name('simpanAbsensi');
+    Route::get('/data_absensi', [AbsensiController::class, 'GetAll'])->name('data_absensi');
 });
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {

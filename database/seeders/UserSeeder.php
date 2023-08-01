@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
         $admin->assignRole('admin');
 
         $karyawan = User::create([
+            'nidn'          => '238',
             'name'          => 'ilham',
             'email'         => 'ilham123@gmail.com',
             'password'      => Hash::make('ilham'),
