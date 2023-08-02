@@ -27,8 +27,8 @@
     </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('index.html') }}">
+    <li class="nav-item {{ $title == 'Data Karyawan' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('data_karyawan') }}">
             <i class="fas fa-users"></i>
             <span>Data Karyawan</span></a>
     </li>
