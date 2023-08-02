@@ -22,7 +22,7 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th class="text-center">Status</th>
-                            <th class="text-center">Action</th>
+                            <th class="text-center">Edit</th>
                         </thead>
                         @php
                             $no = 1;
@@ -51,8 +51,8 @@
                                             class="btn btn-sm rounded-pill {{ $status == 'Aktif' ? 'btn-success' : 'btn-danger' }}">{{ $status }}</button>
                                     </td>
                                     <td class="text-center">
-                                        <a href="#" class="btn btn-sm btn-primary rounded"><i
-                                                class="fas fa-edit"></i></a>
+                                        <a href="/ubah_karyawan/{{ $data['id'] }}"
+                                            class="btn btn-sm btn-primary rounded"><i class="far fa-edit"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -70,6 +70,16 @@
     <script src="https://cdn.datatables.net/v/bs4-4.6.0/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
+    @if ($message = Session::get('sukses'))
+        <script>
+            Swal.fire(
+                'Sukses!',
+                'Karyawan berhasil ditambah',
+                'success'
+            )
+        </script>
+    @endif
 
     <script>
         $('#dataAbsensi').DataTable({
