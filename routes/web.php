@@ -29,11 +29,15 @@ Route::get('/absensi', function () {
 })->middleware(['auth', 'verified'])->name('absensi');
 
 Route::group([['auth', 'verified', 'role:admin']], function () {
-    Route::get('/absensi', [AbsensiController::class, 'index'])->name('admin.absensi');
+    Route::get('/admin_absensi', [AbsensiController::class, 'index'])->name('admin.absensi');
     Route::get('/data_absensi', [AbsensiController::class, 'GetAll'])->name('data_absensi');
     Route::get('/data_karyawan', [KaryawanController::class, 'index'])->name('data_karyawan');
     Route::get('/tambahKaryawan', [KaryawanController::class, 'create'])->name('tambahKaryawan');
     Route::post('/tambahKaryawan', [KaryawanController::class, 'store'])->name('tambahKaryawan');
+});
+
+Route::group(["prefix" => "karyawan", "middleware" => ['auth', 'verified', 'role:karyawab']], function () {
+    Route::get('/karyawan_absensi', [AbsensiController::class, 'index'])->name('karyawan.absensi');
 });
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {

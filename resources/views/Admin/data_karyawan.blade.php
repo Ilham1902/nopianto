@@ -48,7 +48,7 @@
                                     <td>{{ $data['email'] }}</td>
                                     <td class="text-center">
                                         <button
-                                            class="w-50 badge badge-pill {{ $status == 'Aktif' ? 'badge-success' : 'badge-danger' }}">{{ $status }}</button>
+                                            class="btn btn-sm rounded-pill {{ $status == 'Aktif' ? 'btn-success' : 'btn-danger' }}">{{ $status }}</button>
                                     </td>
                                     <td class="text-center">
                                         <a href="#" class="btn btn-sm btn-primary rounded"><i
