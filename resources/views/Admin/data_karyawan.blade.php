@@ -81,6 +81,16 @@
         </script>
     @endif
 
+    @if (session()->has('success_simpan'))
+        <script>
+            Swal.fire(
+                'Sukses!',
+                'Karyawan berhasil diubah',
+                'success'
+            )
+        </script>
+    @endif
+
     <script>
         $('#dataAbsensi').DataTable({
             // dom: 'Bfrtip',

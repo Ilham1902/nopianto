@@ -7,11 +7,14 @@
 @endsection
 
 @section('main')
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-sm-12">
             <div class="card">
                 <form action="{{ route('UpdateKaryawan') }}" method="post" enctype="multipart/form-data">
                     @csrf
+
+                    <input type="hidden" name="id" value="{{ $dataKaryawan['id'] }}">
+
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6 mb-3">
@@ -47,64 +50,62 @@
                                     Ubah Barcode
                                 </button>
 
-                                <!-- Modal Ubah-->
-                                <div class="modal fade" id="ubah" tabindex="-1" role="dialog"
-                                    aria-labelledby="ubahLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="ubahLabel">Ubah Barcode</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <input type="file" class="form-control-file" name="barcode"
-                                                    id="barcode">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Modal Lihat-->
-                                <div class="modal fade" id="lihat" tabindex="-1" role="dialog"
-                                    aria-labelledby="lihatLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="lihatLabel">Lihat Barcode</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <img src="{{ asset('/barcode/' . $dataKaryawan['barcode']) }}"
-                                                    class="text-center w-100">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary rounded-pill float-right">Simpan</button>
+                        <button type="submit" class="btn btn-primary rounded-pill float-right mb-3">Simpan</button>
                     </div>
                 </form>
             </div>
         </div>
+
+        <!-- Modal Ubah-->
+        <div class="modal fade" id="ubah" tabindex="-1" role="dialog" aria-labelledby="ubahLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ubahLabel">Ubah Barcode</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('edit_barcode') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="{{ $dataKaryawan['id'] }}">
+                            <input type="file" class="form-control-file" name="barcode" id="barcode">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Lihat-->
+        <div class="modal fade" id="lihat" tabindex="-1" role="dialog" aria-labelledby="lihatLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="lihatLabel">Lihat Barcode</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{ asset('/barcode/' . $dataKaryawan['barcode']) }}" class="text-center w-100">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 
@@ -115,10 +116,45 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 
-    <script>
-        $('#dataAbsensi').DataTable({
-            // dom: 'Bfrtip',
-            // buttons: ['copy', 'csv', 'print']
-        });
-    </script>
+    @if (session()->has('success'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Data berhasil diubah'
+            })
+        </script>
+    @endif
+
+    @if (session()->has('failed'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'error',
+                title: 'Data gagal diubah'
+            })
+        </script>
+    @endif
 @endsection

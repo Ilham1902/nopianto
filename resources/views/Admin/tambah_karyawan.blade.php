@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary rounded-pill float-right">Simpan</button>
+                        <button type="submit" class="btn btn-primary rounded-pill float-right mb-3">Simpan</button>
                     </div>
                 </form>
             </div>

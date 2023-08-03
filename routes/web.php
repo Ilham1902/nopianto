@@ -33,6 +33,7 @@ Route::group([['auth', 'verified', 'role:admin']], function () {
     Route::get('/data_absensi', [AbsensiController::class, 'GetAll'])->name('data_absensi');
     Route::get('/data_karyawan', [KaryawanController::class, 'index'])->name('data_karyawan');
     Route::get('/ubah_karyawan/{id}', [KaryawanController::class, 'edit']);
+    Route::post('/edit_barcode', [KaryawanController::class, 'edit_barcode'])->name('edit_barcode');
     Route::post('/UpdateKaryawan', [KaryawanController::class, 'UpdateKaryawan'])->name('UpdateKaryawan');
     Route::get('/tambahKaryawan', [KaryawanController::class, 'create'])->name('tambahKaryawan');
     Route::post('/tambahKaryawan', [KaryawanController::class, 'store'])->name('tambahKaryawan');

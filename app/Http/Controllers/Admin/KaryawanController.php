@@ -33,6 +33,55 @@ class KaryawanController extends Controller
         return view('Admin.edit_karyawan', compact('title', 'dataKaryawan'));
     }
 
+    public function edit_barcode(Request $request)
+    {
+        $id             = $request->id;
+
+        $file           = $request->file('barcode');
+        $extension      = $file->getClientOriginalExtension();
+        $file_name_new  = 'barcode_' . date('Ymd_His') . '.' . $extension;
+        $path           = 'barcode';
+
+        // upload file
+        $file->move($path, $file_name_new);
+
+        $update = User::where('id', $id)
+            ->update([
+                "barcode"   => $file_name_new
+            ]);
+
+        if ($update) {
+            return redirect()->back()->with('success', 'Data berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('failed', 'Data gagal diperbarui.');
+        }
+    }
+
+    public function UpdateKaryawan(Request $request)
+    {
+        $id         = $request->id;
+        $nama       = $request->nama;
+        $nidn       = $request->nidn;
+        $email      = $request->email;
+
+        if ($request->password) {
+            $password = Hash::make($request->password);
+            $updatePassowrd = User::where('id', $id)->update([
+                "password"  => $password
+            ]);
+        }
+
+        $updateUser = User::where('id', $id)->update([
+            "nidn"      => $nidn,
+            "name"      => $nama,
+            "email"     => $email
+        ]);
+
+        if ($updateUser) {
+            return redirect()->route('data_karyawan')->with('success_simpan' . 'success_simpan');
+        }
+    }
+
     public function create()
     {
         $title = "Data Karyawan";
@@ -42,12 +91,13 @@ class KaryawanController extends Controller
 
     public function store(Request $request)
     {
-        $file       = $request->file('barcode');
-        $file_name  = $file->getClientOriginalName();
-        $path       = 'barcode';
+        $file           = $request->file('barcode');
+        $extension      = $file->getClientOriginalExtension();
+        $file_name_new  = 'barcode_' . date('Ymd_His') . '.' . $extension;
+        $path           = 'barcode';
 
         // upload file
-        $file->move($path, $file->getClientOriginalName());
+        $file->move($path, $file_name_new);
 
         $nama       = $request->nama;
         $nidn       = $request->nidn;
@@ -55,12 +105,12 @@ class KaryawanController extends Controller
         $password   = Hash::make($request->password);
 
         $created = User::create([
-            "nidn"  => $nidn,
-            "name"  => $nama,
-            "email"  => $email,
+            "nidn"      => $nidn,
+            "name"      => $nama,
+            "email"     => $email,
             "password"  => $password,
             "status"    => '1',
-            "barcode"   => $file_name
+            "barcode"   => $file_name_new
         ]);
 
         $created->assignRole('karyawan');
