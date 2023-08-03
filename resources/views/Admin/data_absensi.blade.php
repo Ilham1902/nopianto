@@ -7,40 +7,43 @@
 @endsection
 
 @section('main')
-    <div class="row mb-3">
-        <div class="col-sm-4">
-            <label for="karyawan">Karyawan</label>
-            <select class="form-control" id="karyawan" name="karyawan">
-                <option value="">Semua</option>
-                @foreach ($dataKaryawan as $karyawan)
-                    <option value="{{ $karyawan['nidn'] }}">{{ $karyawan['nama'] }}</option>
-                @endforeach
-            </select>
+    <form action="{{ route('search') }}" method="post">
+        @csrf
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <label for="karyawan">Karyawan</label>
+                <select class="form-control" id="karyawan" name="karyawan">
+                    <option value="">Semua</option>
+                    @foreach ($dataKaryawan as $karyawan)
+                        <option value="{{ $karyawan['nidn'] }}">{{ $karyawan['nama'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="bulan">Bulan</label>
+                <select class="form-control" id="bulan" name="bulan">
+                    <option value="">Semua</option>
+                    @foreach ($dataBulan as $key => $bulan)
+                        <option value="{{ $key }}">{{ $bulan }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="tahun">Tahun</label>
+                <select class="form-control" id="tahun" name="tahun">
+                    @foreach ($dataTahun as $tahun)
+                        <option value="{{ $tahun }}" @selected($tahunSekarang == $tahun)>{{ $tahun }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
-        <div class="col-sm-4">
-            <label for="bulan">Bulan</label>
-            <select class="form-control" id="bulan" name="bulan">
-                <option value="">Semua</option>
-                @foreach ($dataBulan as $key => $bulan)
-                    <option value="{{ $key }}">{{ $bulan }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-sm-4">
-            <label for="tahun">Tahun</label>
-            <select class="form-control" id="tahun" name="tahun">
-                @foreach ($dataTahun as $tahun)
-                    <option value="{{ $tahun }}" @selected($tahunSekarang == $tahun)>{{ $tahun }}</option>
-                @endforeach
-            </select>
-        </div>
-    </div>
 
-    <div class="row mb-3">
-        <div class="col-sm-12">
-            <button type="submit" class="btn btn-primary rounded-pill float-right">Search</button>
+        <div class="row mb-3">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary rounded-pill float-right">Search</button>
+            </div>
         </div>
-    </div>
+    </form>
 
     <div class="row">
         <div class="col-sm-12">

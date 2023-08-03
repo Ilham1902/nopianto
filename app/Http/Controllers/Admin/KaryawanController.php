@@ -25,12 +25,28 @@ class KaryawanController extends Controller
 
     public function edit($id)
     {
-        $title = "Data Karyawan";
+        $title = "Edit Karyawan";
         $dataKaryawan = User::where('id', $id)->first();
 
         // print_r($dataKaryawan['name']);
 
         return view('Admin.edit_karyawan', compact('title', 'dataKaryawan'));
+    }
+
+    public function ubah_status(Request $request)
+    {
+        $id = $request->id;
+        $status = $request->status;
+        $update = User::where('id', $id)
+            ->update([
+                "status"   => $status
+            ]);
+
+        if ($update) {
+            return redirect()->back()->with('success', 'Data berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('failed', 'Data gagal diperbarui.');
+        }
     }
 
     public function edit_barcode(Request $request)
@@ -63,11 +79,12 @@ class KaryawanController extends Controller
         $nama       = $request->nama;
         $nidn       = $request->nidn;
         $email      = $request->email;
+        $password   = $request->password;
 
-        if ($request->password) {
-            $password = Hash::make($request->password);
+        if ($password) {
+            $new_password   = Hash::make($password);
             $updatePassowrd = User::where('id', $id)->update([
-                "password"  => $password
+                "password"  => $new_password
             ]);
         }
 
@@ -77,14 +94,12 @@ class KaryawanController extends Controller
             "email"     => $email
         ]);
 
-        if ($updateUser) {
-            return redirect()->route('data_karyawan')->with('success_simpan' . 'success_simpan');
-        }
+        return redirect()->route('data_karyawan')->with('success_simpan', 'success_simpan');
     }
 
     public function create()
     {
-        $title = "Data Karyawan";
+        $title = "Tambah Karyawan";
 
         return view('Admin.tambah_karyawan', compact('title'));
     }

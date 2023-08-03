@@ -10,15 +10,14 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-header">Data Karyawan</div>
+                <div class="card-header">Data Admin</div>
                 <div class="card-body table-responsive">
-                    <a href="{{ route('tambahKaryawan') }}" class="btn btn-primary btn-sm rounded-pill mb-3"><i
+                    <a href="{{ route('tambahAdmin') }}" class="btn btn-primary btn-sm rounded-pill mb-3"><i
                             class="fas fa-user-plus"></i>
-                        Tambah Karyawan</a>
+                        Tambah Admin</a>
                     <table class="table w-100" id="dataAbsensi">
                         <thead>
                             <th>#</th>
-                            <th>NIDN</th>
                             <th>Nama</th>
                             <th>Email</th>
                             <th class="text-center">Status</th>
@@ -28,7 +27,7 @@
                             $no = 1;
                         @endphp
                         <tbody>
-                            @foreach ($dataKaryawan as $data)
+                            @foreach ($dataAdmin as $data)
                                 @if ($data['status'] == '1')
                                     @php
                                         $status = 'Aktif';
@@ -41,9 +40,6 @@
 
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>
-                                        {{ $data['nidn'] }}
-                                    </td>
                                     <td>{{ $data['name'] }}</td>
                                     <td>{{ $data['email'] }}</td>
                                     <td class="text-center">
@@ -53,8 +49,8 @@
                                             data-toggle="modal" data-target="#ubahStatus">{{ $status }}</button>
                                     </td>
                                     <td class="text-center">
-                                        <a href="/ubah_karyawan/{{ $data['id'] }}"
-                                            class="btn btn-sm btn-primary rounded"><i class="far fa-edit"></i></a>
+                                        <a href="/ubah_admin/{{ $data['id'] }}" class="btn btn-sm btn-primary rounded"><i
+                                                class="far fa-edit"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -101,21 +97,11 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 
-    @if ($message = Session::get('sukses'))
-        <script>
-            Swal.fire(
-                'Sukses!',
-                'Karyawan berhasil ditambah',
-                'success'
-            )
-        </script>
-    @endif
-
     @if (session()->has('success_simpan'))
         <script>
             Swal.fire(
                 'Sukses!',
-                'Karyawan berhasil diubah',
+                'Admin berhasil diubah',
                 'success'
             )
         </script>

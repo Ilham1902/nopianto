@@ -83,4 +83,50 @@ class AbsensiController extends Controller
         $title = "Data Absensi";
         return view('Admin.data_absensi', compact('dataAbsensi', 'title', 'dataKaryawan', 'dataBulan', 'dataTahun', 'tahunSekarang'));
     }
+
+    public function Search(Request $request)
+    {
+        $karyawan   = $request->karyawan;
+        $bulan      = $request->bulan;
+        $tahun      = $request->tahun;
+
+        $query = dataAbsensi::select('data_absensi.nidn', 'users.name', 'data_absensi.tanggal', 'data_absensi.jam', 'data_absensi.kehadiran', 'data_absensi.status')
+            ->join('users', 'users.nidn', '=', 'data_absensi.nidn')
+            ->whereYear('data_absensi.tanggal', $tahun);
+
+        if (!empty($karyawan)) {
+            $query->where('data_absensi.nidn', $karyawan);
+        }
+
+        if (!empty($bulan)) {
+            $query->whereMonth('data_absensi.tanggal', $bulan);
+        }
+
+        $dataAbsensi = $query->get();
+
+        $dataKaryawan = Absensi::where('status', '1')->get();
+        $dataBulan = [
+            '01' => "Januari",
+            '02' => "Februari",
+            '03' => "Maret",
+            '04' => "April",
+            '05' => "Mei",
+            '06' => "Juni",
+            '07' => "Juli",
+            '08' => "Agustus",
+            '09' => "September",
+            '10' => "Oktober",
+            '11' => "November",
+            '12' => "Desember"
+        ];
+
+        $tahunSekarang = date("Y");
+        $sebelumTahunSekarang = $tahunSekarang - 1;
+        $sesudahTahunSekarang = $tahunSekarang + 1;
+
+        $dataTahun = [$sebelumTahunSekarang, $tahunSekarang, $sesudahTahunSekarang];
+
+        $title = "Data Absensi";
+        return view('Admin.data_absensi', compact('dataAbsensi', 'title', 'dataKaryawan', 'dataBulan', 'dataTahun', 'tahunSekarang'));
+    }
 }

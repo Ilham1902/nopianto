@@ -27,14 +27,16 @@
     </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item {{ $title == 'Data Karyawan' ? 'active' : '' }}">
+    <li
+        class="nav-item {{ $title == 'Data Karyawan' || $title == 'Edit Karyawan' || $title == 'Tambah Karyawan' ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('data_karyawan') }}">
             <i class="fas fa-users"></i>
             <span>Data Karyawan</span></a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('index.html') }}">
+    <li
+        class="nav-item {{ $title == 'Data Admin' || $title == 'Edit Admin' || $title == 'Tambah Admin' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('data_admin') }}">
             <i class="fas fa-users"></i>
             <span>Data Admin</span></a>
     </li>
