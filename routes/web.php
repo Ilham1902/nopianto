@@ -5,6 +5,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\KaryawanController;
 use App\Http\Controllers\Admin\AbsensiController;
 use App\Http\Controllers\Admin\DataAdminController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Karyawan\AbsensiKaryawanController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +21,7 @@ use App\Http\Controllers\Admin\DataAdminController;
 */
 
 Route::get('/', function () {
-    return view('Auth.login');
+    return redirect()->route('login');
 })->middleware(['guest']);
 
 Route::get('/absensi', function () {
@@ -50,16 +53,18 @@ Route::group([['auth', 'verified', 'role:admin']], function () {
     Route::post('/tambahAdmin', [DataAdminController::class, 'store'])->name('tambahAdmin');
     Route::get('/ubah_admin/{id}', [DataAdminController::class, 'edit']);
     Route::post('/UpdateAdmin', [DataAdminController::class, 'UpdateAdmin'])->name('UpdateAdmin');
+
+    // Info Akun
+    Route::get('/info_akunAdmin', [UserController::class, 'akunAdmin'])->name('akunAdmin');
+    Route::get('/editAkunAdmin', [UserController::class, 'editAkunAdmin'])->name('editAkunAdmin');
+    Route::post('/UpdateAkun', [UserController::class, 'UpdateAkun'])->name('UpdateAkun');
 });
 
-Route::group(["prefix" => "karyawan", "middleware" => ['auth', 'verified', 'role:karyawab']], function () {
-    Route::get('/karyawan_absensi', [AbsensiController::class, 'index'])->name('karyawan.absensi');
-});
-
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::group(["prefix" => "karyawan", "middleware" => ['auth', 'verified', 'role:karyawan']], function () {
+    Route::get('/karyawan_absensi', [AbsensiKaryawanController::class, 'index'])->name('karyawan.absensi');
+    Route::get('/info_akunKaryawan', [UserController::class, 'akunKaryawan'])->name('akunKaryawan');
+    Route::get('/editAkunKaryawan', [UserController::class, 'editAkunKaryawan'])->name('editAkunKaryawan');
+    Route::post('/UpdateAkun', [UserController::class, 'UpdateAkunKaryawan'])->name('UpdateAkunKaryawan');
 });
 
 require __DIR__ . '/auth.php';

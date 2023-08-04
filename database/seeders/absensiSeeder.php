@@ -22,5 +22,15 @@ class absensiSeeder extends Seeder
             'status'        => '1',
             'telat'        => '0'
         ]);
+
+        Absensi::create([
+            'id_absensi'    => 'test2',
+            'nidn'          => '101000',
+            'nama'          => 'Untung',
+            'tanggal'       => date("Y-m-d"),
+            'jam'           => date("H:i:s"),
+            'status'        => '1',
+            'telat'        => '0'
+        ]);
     }
 }

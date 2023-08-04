@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
 
         $admin->assignRole('admin');
 
-        $karyawan = User::create([
+        $karyawan1 = User::create([
             'nidn'          => '238',
             'name'          => 'ilham',
             'email'         => 'ilham123@gmail.com',
@@ -31,6 +31,16 @@ class UserSeeder extends Seeder
             'status'        => '1',
         ]);
 
-        $karyawan->assignRole('karyawan');
+        $karyawan1->assignRole('karyawan');
+
+        $karyawan2 = User::create([
+            'nidn'          => '101000',
+            'name'          => 'Untung',
+            'email'         => 'untung123@gmail.com',
+            'password'      => Hash::make('untung'),
+            'status'        => '1',
+        ]);
+
+        $karyawan2->assignRole('karyawan');
     }
 }

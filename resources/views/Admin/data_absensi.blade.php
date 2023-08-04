@@ -71,7 +71,7 @@
                                         {{ $data['nidn'] }}
                                     </td>
                                     <td>{{ $data['name'] }}</td>
-                                    <td>{{ $data['tanggal'] }}</td>
+                                    <td>{{ date('d-M-Y', strtotime($data['tanggal'])) }}</td>
                                     <td>{{ $data['jam'] }}</td>
                                     <td>{{ $data['kehadiran'] }}</td>
                                     <td>{{ $data['status'] }}</td>
