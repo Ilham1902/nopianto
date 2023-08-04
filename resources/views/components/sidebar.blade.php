@@ -1,19 +1,18 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/absensi">
+        <div class="sidebar-brand-icon rotate-n-15 d-none d-sm-inline">
+            AK
+        </div>
+        <div class="sidebar-brand-text mx-3">Absesnsi Karyawan</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
 
     @if (auth()->user()->hasRole('karyawan'))
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/absensi">
-            <div class="sidebar-brand-icon rotate-n-15 d-none d-sm-inline">
-                AK
-            </div>
-            <div class="sidebar-brand-text mx-3">Absesnsi Karyawan</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
         <!-- Nav Item - Dashboard -->
         <li class="nav-item {{ $title == 'Absensi' ? 'active' : '' }}">
             <a class="nav-link" href="/absensi">
@@ -21,17 +20,6 @@
                 <span>Absensi</span></a>
         </li>
     @elseif (auth()->user()->hasRole('admin'))
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/absensi">
-            <div class="sidebar-brand-icon rotate-n-15 d-none d-sm-inline">
-                AK
-            </div>
-            <div class="sidebar-brand-text mx-3">Absesnsi Karyawan</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
         <!-- Nav Item - Dashboard -->
         <li class="nav-item {{ $title == 'Absensi' ? 'active' : '' }}">
             <a class="nav-link" href="/absensi">

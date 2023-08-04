@@ -32,7 +32,7 @@ Route::get('/absensi', function () {
     }
 })->middleware(['auth', 'verified'])->name('absensi');
 
-Route::group([['auth', 'verified', 'role:admin']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function () {
     // Absensi
     Route::get('/admin_absensi', [AbsensiController::class, 'index'])->name('admin.absensi');
     Route::get('/data_absensi', [AbsensiController::class, 'GetAll'])->name('data_absensi');
