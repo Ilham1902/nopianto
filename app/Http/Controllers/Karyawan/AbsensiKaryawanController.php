@@ -11,9 +11,8 @@ class AbsensiKaryawanController extends Controller
     public function index()
     {
         $tanggal = date("Y-m-d");
-        $data = Absensi::where('tanggal', '<', $tanggal)
-            ->orwhere('tanggal', '=', $tanggal)
-            ->where('nidn', auth()->user()->nidn)->first();
+        $data = Absensi::where('nidn', auth()->user()->nidn)
+            ->where('tanggal', '<=', $tanggal)->first();
         $title = "Absensi";
 
         return view('Karyawan.absensi', compact('data', 'title', 'tanggal'));

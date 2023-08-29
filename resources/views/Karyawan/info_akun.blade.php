@@ -34,40 +34,12 @@
                                 <img src="{{ asset('/barcode/' . $akun['barcode']) }}" width="200px">
                             </button> <br>
 
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ubah">
-                                Ubah Barcode
-                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <a href="{{ route('editAkunKaryawan') }}" class="btn btn-primary rounded-pill float-right">Edit
                         Akun</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Ubah-->
-        <div class="modal fade" id="ubah" tabindex="-1" role="dialog" aria-labelledby="ubahLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ubahLabel">Ubah Barcode</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="{{ route('edit_barcode') }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <div class="modal-body">
-                            <input type="hidden" name="id" value="{{ $akun['id'] }}">
-                            <input type="file" class="form-control-file" name="barcode" id="barcode">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

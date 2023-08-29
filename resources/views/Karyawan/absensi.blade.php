@@ -14,30 +14,37 @@
                             <th>Keterangan</th>
                             <th>Action</th>
                         </tr>
-                        <tr data-key="{{ $data['nidn'] }}">
-                            <td>1</td>
-                            <td>
-                                {{ $data['nidn'] }}
-                            </td>
-                            <td>{{ $data['nama'] }}</td>
-                            <td>
-                                <select class="custom-select" name="kehadiran">
-                                    <option selected>Belum Absen</option>
-                                    <option value="Izin">Izin</option>
-                                    <option value="Sakit">Sakit</option>
-                                    <option value="Alpha">Alpha</option>
-                                </select>
-                            </td>
-                            <td>
-                                @if ($tanggal == $data['tanggal'])
-                                    <span id="teks_{{ $data['nidn'] }}">Kehadiran sudah disimpan</span>
-                                @else
-                                    <button class="btn btn-primary btn-sm rounded-pill" id="tombol_{{ $data['nidn'] }}"
-                                        onclick="simpan('{{ $data['nidn'] }}')">Simpan</button>
-                                    <span id="teks_{{ $data['nidn'] }}" style="display: none">Tersimpan</span>
-                                @endif
-                            </td>
-                        </tr>
+                        @if (!empty($data))
+                            <tr data-key="{{ $data['nidn'] }}">
+                                <td>1</td>
+                                <td>
+                                    {{ $data['nidn'] }}
+                                </td>
+                                <td>{{ $data['nama'] }}</td>
+                                <td>
+                                    <select class="custom-select" name="kehadiran">
+                                        <option selected>Belum Absen</option>
+                                        <option value="Izin">Izin</option>
+                                        <option value="Sakit">Sakit</option>
+                                        <option value="Alpha">Alpha</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    @if ($tanggal == $data['tanggal'])
+                                        <span id="teks_{{ $data['nidn'] }}">Kehadiran sudah disimpan</span>
+                                    @else
+                                        <button class="btn btn-primary btn-sm rounded-pill" id="tombol_{{ $data['nidn'] }}"
+                                            onclick="simpan('{{ $data['nidn'] }}')">Simpan</button>
+                                        <span id="teks_{{ $data['nidn'] }}" style="display: none">Tersimpan</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @else
+                            <div class="alert alert-danger" role="alert">
+                                Tidak ada data absensi
+                            </div>
+                        @endif
+
                     </table>
                 </div>
             </div>
@@ -51,7 +58,7 @@
             // Ambil nilai kehadiran dari elemen <select>
             const kehadiran = $(`tr[data-key="${nidn}"] select[name="kehadiran"]`).val();
 
-            console.log(nidn);
+            // console.log(nidn);
             // Lakukan permintaan AJAX untuk menyimpan data kehadiran beserta NIDN
             $.ajax({
                 type: 'POST',
