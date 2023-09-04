@@ -16,6 +16,12 @@
                         </tr>
                         @php
                             $no = 1;
+                            $valAbsensi = [
+                                'Hadir' => 'Hadir',
+                                'Izin' => 'Izin',
+                                'Sakit' => 'Sakit',
+                                'Alpha' => 'Alpha',
+                            ];
                         @endphp
                         @foreach ($dataAbsensi as $data)
                             <tr data-key="{{ $data['nidn'] }}">
@@ -26,17 +32,20 @@
                                 <td>{{ $data['nama'] }}</td>
                                 <td>
                                     <select class="custom-select" name="kehadiran">
-                                        <option selected>Belum Absen</option>
-                                        <option value="Hadir">Hadir</option>
-                                        <option value="Izin">Izin</option>
-                                        <option value="Sakit">Sakit</option>
-                                        <option value="Alpha">Alpha</option>
+                                        @foreach ($valAbsensi as $key => $dataKehadiran)
+                                            <option value="{{ $key }}" @selected($data['keterangan'] == $key)>
+                                                {{ $dataKehadiran }}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm rounded-pill" id="tombol_{{ $data['nidn'] }}"
-                                        onclick="simpan('{{ $data['nidn'] }}')">Simpan</button>
-                                    <span id="teks_{{ $data['nidn'] }}" style="display: none">Tersimpan</span>
+                                    @if ($data['status'] == 2 && $data['tanggal'] == date('Y-m-d'))
+                                        Data Sudah Tersimpan
+                                    @else
+                                        <button class="btn btn-primary btn-sm rounded-pill" id="tombol_{{ $data['nidn'] }}"
+                                            onclick="simpan('{{ $data['nidn'] }}')">Simpan</button>
+                                        <span id="teks_{{ $data['nidn'] }}" style="display: none">Tersimpan</span>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

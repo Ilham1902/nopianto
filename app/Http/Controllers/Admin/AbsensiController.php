@@ -12,7 +12,9 @@ class AbsensiController extends Controller
     public function index()
     {
         $tanggal = date("Y-m-d");
-        $dataAbsensi = Absensi::where('tanggal', '<', $tanggal)->get();
+        $dataAbsensi = Absensi::where('tanggal', '<=', $tanggal)
+            ->orWhere("status", "1")
+            ->get();
         $title = "Absensi";
 
         return view('Admin.absensi', compact('dataAbsensi', 'title'));
@@ -37,12 +39,14 @@ class AbsensiController extends Controller
         }
 
         $update = Absensi::where('nidn', $nidn)->update([
-            'tanggal'   => $tgl,
-            'jam'       => $jam
+            'tanggal'       => $tgl,
+            'jam'           => $jam,
+            'status'        => 2,
+            'keterangan'    => $kehadiran
         ]);
 
         $history = dataAbsensi::create([
-            'nidn'  => $nidn,
+            'nidn'      => $nidn,
             'tanggal'   => $tgl,
             'jam'       => $jam,
             'kehadiran' => $kehadiran,
